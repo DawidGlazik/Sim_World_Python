@@ -148,11 +148,11 @@ class Roslina(Organizm):
 
     def kolizja(self, org):
         komentarz = ""
-        komentarz += org.nazwa
-        komentarz += org.polozenie
+        komentarz += str(org.nazwa)
+        komentarz += str(org.polozenie)
         komentarz += " zjada "
-        komentarz += self.nazwa
-        komentarz += self.polozenie
+        komentarz += str(self.nazwa)
+        komentarz += str(self.polozenie)
         self.swiat.konsola += komentarz
         self.swiat.konsola += "\n"
         for i, organizm in enumerate(self.swiat.organizmy):

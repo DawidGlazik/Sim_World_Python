@@ -16,22 +16,23 @@ class WilczeJagody(Roslina):
         if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Pole):
             komentarz = ""
             komentarz += "Zasiano "
-            komentarz += self.nazwa
+            komentarz += str(self.nazwa)
             komentarz += "("
-            komentarz += self.polozenie[0] + x + 1
+            komentarz += str(self.polozenie[0] + x + 1)
             komentarz += ","
-            komentarz += self.polozenie[1] + y + 1
+            komentarz += str(self.polozenie[1] + y + 1)
             komentarz += ")"
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.dodajOrganizm(WilczeJagody(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
 
     def kolizja(self, org):
         komentarz = ""
-        komentarz += org.nazwa
-        komentarz += org.polozenie
+        komentarz += str(org.nazwa)
+        komentarz += str(org.polozenie)
         komentarz += " zjada "
-        komentarz += self.nazwa
-        komentarz += self.polozenie
+        komentarz += str(self.nazwa)
+        komentarz += str(self.polozenie)
         komentarz += "i umiera"
         self.swiat.konsola += komentarz
         self.swiat.konsola += "\n"

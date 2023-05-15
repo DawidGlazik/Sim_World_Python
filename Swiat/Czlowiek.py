@@ -18,12 +18,13 @@ class Czlowiek(Zwierze):
     def sprawdzIZabij(self, x, y):
         if not isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Pole):
             komentarz = ""
-            komentarz += self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].nazwa
-            komentarz += self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].polozenie
+            komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].nazwa)
+            komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].polozenie)
             komentarz += " zabity(a) przez (calopalenie) "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y] = Pole()
             for i, organizm in enumerate(self.swiat.organizmy):
                 if organizm.polozenie[0] == self.polozenie[0] + x and organizm.polozenie[1] == self.polozenie[1] + y:

@@ -17,13 +17,14 @@ class Antylopa(Zwierze):
         if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Pole):
             komentarz = ""
             komentarz += "Narodziny organizmu: "
-            komentarz += self.nazwa
+            komentarz += str(self.nazwa)
             komentarz += "("
-            komentarz += self.polozenie[0] + x + 1
+            komentarz += str(self.polozenie[0] + x + 1)
             komentarz += ","
-            komentarz += self.polozenie[1] + y + 1
+            komentarz += str(self.polozenie[1] + y + 1)
             komentarz += ")"
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.dodajOrganizm(Antylopa(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
 
     def akcja(self):
@@ -183,12 +184,12 @@ class Antylopa(Zwierze):
                 self.rozmnazanie()
         elif szansa == 0:
             komentarz = ""
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             komentarz += " ucieka"
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
-            if self.polozenie[1] != self.swiat.szerokosc - 1 and isinstance(self.swiat.plansza[self.polozenie[0][self.polozenie[1] + 1]], Pole):
+            if self.polozenie[1] != self.swiat.szerokosc - 1 and isinstance(self.swiat.plansza[self.polozenie[0]][self.polozenie[1] + 1], Pole):
                 self.swiat.plansza[self.polozenie[0]][self.polozenie[1] + 1] = self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
                 self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
                 self.polozenie[1] += 1
@@ -206,12 +207,13 @@ class Antylopa(Zwierze):
                 self.polozenie[0] -= 1
         elif org.sila > self.sila:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " pokonuje "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             for i, organizm in enumerate(self.swiat.organizmy):
                 if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:
                     del self.swiat.organizmy[i]
@@ -221,12 +223,13 @@ class Antylopa(Zwierze):
             org.polozenie[1] = self.polozenie[1]
         else:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " przegrywa z "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
             for i, organizm in enumerate(self.swiat.organizmy):
                 if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:

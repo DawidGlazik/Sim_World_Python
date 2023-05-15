@@ -237,12 +237,13 @@ class Zwierze(Organizm):
                 self.rozmnazanie()
         elif org.sila >= self.sila:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " pokonuje "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             for i, organizm in enumerate(self.swiat.organizmy):
                 if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:
                     del self.swiat.organizmy[i]
@@ -252,12 +253,13 @@ class Zwierze(Organizm):
             org.polozenie[1] = self.polozenie[1]
         else:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " przegrywa z "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
             for i, organizm in enumerate(self.swiat.organizmy):
                 if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:

@@ -1,7 +1,5 @@
 import random
-import tkinter as tk
-from Swiat.Zwierze import Zwierze
-from Swiat.Roslina import Roslina
+from Swiat.Okno import Okno
 from Rosliny.Pole import Pole
 from Swiat.Czlowiek import Czlowiek
 from Rosliny.BarszczSosnowskiego import BarszczSosnowskiego
@@ -14,6 +12,8 @@ from Zwierzeta.Lis import Lis
 from Zwierzeta.Owca import Owca
 from Zwierzeta.Wilk import Wilk
 from Zwierzeta.Antylopa import Antylopa
+from Zwierzeta.CyberOwca import CyberOwca
+
 
 class Symulator:
 
@@ -25,80 +25,42 @@ class Symulator:
         self.organizmy = []
         self.plansza = [[Pole() for _ in range(szerokosc)] for _ in range(wysokosc)]
         numberOfOrganisms = szerokosc * wysokosc / 15
-        self.dodajOrganizm(Czlowiek(self, (wysokosc / 2, szerokosc / 2)))
+        self.dodajOrganizm(Czlowiek(self, [int(wysokosc / 2), int(szerokosc / 2)]))
         for i in range(0, int(numberOfOrganisms)):
             random1 = random.randint(0, wysokosc - 1)
             random2 = random.randint(0, szerokosc - 1)
             random3 = random.randint(0, 1000)
             if isinstance(self.plansza[random1][random2], Pole):
-                if i < 10:
+                if i < 11:
                     k = i
                 else:
-                    k = random3 % 10
+                    k = random3 % 11
                 if k == 0:
-                    self.dodajOrganizm(BarszczSosnowskiego(self, (random1, random2)))
+                    self.dodajOrganizm(BarszczSosnowskiego(self, [random1, random2]))
                 elif k == 1:
-                    self.dodajOrganizm(Guarana(self, (random1, random2)))
+                    self.dodajOrganizm(Guarana(self, [random1, random2]))
                 elif k == 2:
-                    self.dodajOrganizm(Mlecz(self, (random1, random2)))
+                    self.dodajOrganizm(Mlecz(self, [random1, random2]))
                 elif k == 3:
-                    self.dodajOrganizm(Trawa(self, (random1, random2)))
+                    self.dodajOrganizm(Trawa(self, [random1, random2]))
                 elif k == 4:
-                    self.dodajOrganizm(WilczeJagody(self, (random1, random2)))
+                    self.dodajOrganizm(WilczeJagody(self, [random1, random2]))
                 elif k == 5:
-                    self.dodajOrganizm(Antylopa(self, (random1, random2)))
+                    self.dodajOrganizm(Antylopa(self, [random1, random2]))
                 elif k == 6:
-                    self.dodajOrganizm(Lis(self, (random1, random2)))
+                    self.dodajOrganizm(Lis(self, [random1, random2]))
                 elif k == 7:
-                    self.dodajOrganizm(Owca(self, (random1, random2)))
+                    self.dodajOrganizm(Owca(self, [random1, random2]))
                 elif k == 8:
-                    self.dodajOrganizm(Wilk(self, (random1, random2)))
+                    self.dodajOrganizm(Wilk(self, [random1, random2]))
                 elif k == 9:
-                    self.dodajOrganizm(Zolw(self, (random1, random2)))
+                    self.dodajOrganizm(Zolw(self, [random1, random2]))
+                elif k == 10:
+                    self.dodajOrganizm(CyberOwca(self, [random1, random2]))
 
     def rysujSwiat(self, plansza):
-        root = tk.Tk()
-
-        canvas = tk.Canvas(root, width=len(plansza[0]) * 30, height=len(plansza) * 30)
-        canvas.pack()
-
-        for row in range(len(plansza)):
-            for col in range(len(plansza[row])):
-                x1 = col * 30
-                y1 = row * 30
-                x2 = x1 + 30
-                y2 = y1 + 30
-
-                if isinstance(plansza[row][col], Pole):
-                    canvas.create_rectangle(x1, y1, x2, y2, fill="white")
-                elif isinstance(plansza[row][col], Czlowiek):
-                    canvas.create_rectangle(x1, y1, x2, y2, fill="gray")
-                elif isinstance(plansza[row][col], Zwierze):
-                    canvas.create_rectangle(x1, y1, x2, y2, fill="yellow")
-                elif isinstance(plansza[row][col], Roslina):
-                    canvas.create_rectangle(x1, y1, x2, y2, fill="green")
-
-        # Tworzenie kontenera na przyciski
-        button_frame = tk.Frame(root)
-        button_frame.pack()
-
-        # Tworzenie przycisków
-        button1 = tk.Button(button_frame, text="Tura")
-        button2 = tk.Button(button_frame, text="Zapisz")
-        button3 = tk.Button(button_frame, text="Wczytaj")
-        button4 = tk.Button(button_frame, text="Calopalenie")
-
-        # Umieszczenie przycisków w kontenerze
-        button1.pack(side="left")
-        button2.pack(side="left")
-        button3.pack(side="left")
-        button4.pack(side="left")
-
-        # Tworzenie miejsca na tekst
-        text_label = tk.Label(root, text="Tekst")
-        text_label.pack(side="left")
-        root.mainloop()
-        self.wypiszOrganizmy()
+        okno = Okno(self, plansza)
+        okno.rysuj()
 
     def dodajOrganizm(self, nowy):
         self.plansza[int(nowy.polozenie[0])][int(nowy.polozenie[1])] = nowy
@@ -127,6 +89,7 @@ class Symulator:
                 tmp.akcja()
             else:
                 organizm.akcja()
+        self.tura += 1
 
     def zapisz(self):
         pass

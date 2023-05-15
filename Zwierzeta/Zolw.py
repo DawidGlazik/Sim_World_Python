@@ -18,13 +18,14 @@ class Zolw(Zwierze):
         if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Pole):
             komentarz = ""
             komentarz += "Narodziny organizmu: "
-            komentarz += self.nazwa
+            komentarz += str(self.nazwa)
             komentarz += "("
-            komentarz += self.polozenie[0] + x + 1
+            komentarz += str(self.polozenie[0] + x + 1)
             komentarz += ","
-            komentarz += self.polozenie[1] + y + 1
+            komentarz += str(self.polozenie[1] + y + 1)
             komentarz += ")"
             self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
             self.swiat.dodajOrganizm(Zolw(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
 
     def akcja(self):
@@ -39,21 +40,21 @@ class Zolw(Zwierze):
                 self.rozmnazanie()
         elif org.sila < 5:
             komentarz = ""
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             komentarz += " zatrzymal: "
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
             return
         elif org.sila > self.sila:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " pokonuje: "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
             for i, organizm in enumerate(self.swiat.organizmy):
@@ -65,11 +66,11 @@ class Zolw(Zwierze):
             org.polozenie[1] = self.polozenie[1]
         else:
             komentarz = ""
-            komentarz += org.nazwa
-            komentarz += org.polozenie
+            komentarz += str(org.nazwa)
+            komentarz += str(org.polozenie)
             komentarz += " przegrywa z: "
-            komentarz += self.nazwa
-            komentarz += self.polozenie
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
             self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
