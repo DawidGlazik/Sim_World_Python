@@ -5,6 +5,7 @@ from Rosliny.Pole import Pole
 class Czlowiek(Zwierze):
 
     def __init__(self, swiat=None, polozenie=None, sila=5, wiek=0, trwanie=5, przerwa=0):
+        super().__init__(swiat, polozenie)
         self.sila = sila
         self.inicjatywa = 4
         self.wiek = wiek
@@ -37,7 +38,7 @@ class Czlowiek(Zwierze):
             else:
                 if isinstance(self.swiat.plansza[self.polozenie[0] - 1][self.polozenie[1]], Pole):
                     self.swiat.plansza[self.polozenie[0] - 1][self.polozenie[1]] = \
-                    self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
+                        self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
                     self.polozenie[0] -= 1
                 else:
@@ -48,7 +49,7 @@ class Czlowiek(Zwierze):
             else:
                 if isinstance(self.swiat.plansza[self.polozenie[0] + 1][self.polozenie[1]], Pole):
                     self.swiat.plansza[self.polozenie[0] + 1][self.polozenie[1]] = \
-                    self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
+                        self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
                     self.polozenie[0] += 1
                 else:
@@ -59,7 +60,7 @@ class Czlowiek(Zwierze):
             else:
                 if isinstance(self.swiat.plansza[self.polozenie[0]][self.polozenie[1] - 1], Pole):
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1] - 1] = \
-                    self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
+                        self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
                     self.polozenie[1] -= 1
                 else:
@@ -70,7 +71,7 @@ class Czlowiek(Zwierze):
             else:
                 if isinstance(self.swiat.plansza[self.polozenie[0]][self.polozenie[1] + 1], Pole):
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1] + 1] = \
-                    self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
+                        self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
                     self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
                     self.polozenie[1] += 1
                 else:
@@ -130,5 +131,5 @@ class Czlowiek(Zwierze):
             self.sprawdzIZabij(0, -1)
             self.sprawdzIZabij(1, -1)
 
-        def narodziny(self, x, y):
-            pass
+    def narodziny(self, x, y):
+        print("")
