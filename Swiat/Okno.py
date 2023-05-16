@@ -23,12 +23,13 @@ class Okno:
         self.root = tk.Tk()
         self.root.title("Dawid Glazik s193069")
         self.canvas = None
+        self.dialog = None
         self.swiat = swiat
         self.plansza = plansza
         self.text_area = None
 
     def rysuj(self):
-        self.canvas = tk.Canvas(self.root, width=len(self.plansza[0]) * 30, height=len(self.plansza) * 30)
+        self.canvas = tk.Canvas(self.root, width=len(self.plansza[0]) * 30, height=len(self.plansza) * 30, cursor="hand2")
         self.canvas.pack()
 
         for row in range(len(self.plansza)):
@@ -68,6 +69,7 @@ class Okno:
                         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="w")
                     elif isinstance(self.plansza[row][col], BarszczSosnowskiego):
                         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="b")
+                self.canvas.bind("<Button-1>", self.klikniecie)
 
         button_frame = tk.Frame(self.root)
         button_frame.pack()
@@ -134,6 +136,7 @@ class Okno:
                         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="w")
                     elif isinstance(self.plansza[row][col], BarszczSosnowskiego):
                         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="b")
+                self.canvas.bind("<Button-1>", self.klikniecie)
 
         self.text_area.configure(state="normal")
         self.text_area.delete(1.0, tk.END)
@@ -197,3 +200,55 @@ class Okno:
                 self.swiat.wykonajTure(4)
                 self.odswiez()
                 break
+
+    def klikniecie(self, event):
+        x = event.x // 30  # Oblicz indeks kolumny na podstawie współrzędnej x kliknięcia
+        y = event.y // 30  # Oblicz indeks wiersza na podstawie współrzędnej y kliknięcia
+
+        if not isinstance(self.swiat.plansza[y][x], Pole):
+            self.swiat.konsola += "Miejsce zajete"
+            self.text_area.configure(state="normal")
+            self.text_area.insert(tk.END, self.swiat.konsola)
+            self.text_area.configure(state="disabled")
+            self.odswiez()
+            return
+        else:
+            self.dialog = tk.Toplevel(self.root)
+            self.dialog.title("Wybierz opcję")
+
+            # Lista opcji
+            opcje = ["Wilk", "Owca", "Lis", "Zolw", "Antylopa", "CyberOwca", "Trawa", "Mlecz", "Guarana", "Wilcze Jagody",
+                     "Barszcz Sosnowskiego"]
+
+            # Ustawienie przycisków zgodnie z układem 5, 5, 1
+            for opcja in opcje:
+                button = tk.Button(self.dialog, text=opcja)
+                button.configure(command=lambda wybrano=opcja: self.handle_button_click(wybrano, y ,x))
+                button.pack(expand=True, fill=tk.BOTH)
+
+    def handle_button_click(self, wybrano, x, y):
+        self.dialog.destroy()
+        if wybrano == "BarszczSosnowskiego":
+            self.swiat.dodajOrganizm(BarszczSosnowskiego(self.swiat, [x, y]))
+        elif wybrano == "Guarana":
+            self.swiat.dodajOrganizm(Guarana(self.swiat, [x, y]))
+        elif wybrano == "Mlecz":
+            self.swiat.dodajOrganizm(Mlecz(self.swiat, [x, y]))
+        elif wybrano == "Trawa":
+            self.swiat.dodajOrganizm(Trawa(self.swiat, [x, y]))
+        elif wybrano == "WilczeJagody":
+            self.swiat.dodajOrganizm(WilczeJagody(self.swiat, [x, y]))
+        elif wybrano == "Antylopa":
+            self.swiat.dodajOrganizm(Antylopa(self.swiat, [x, y]))
+        elif wybrano == "Lis":
+            self.swiat.dodajOrganizm(Lis(self.swiat, [x, y]))
+        elif wybrano == "Owca":
+            self.swiat.dodajOrganizm(Owca(self.swiat, [x, y]))
+        elif wybrano == "Wilk":
+            self.swiat.dodajOrganizm(Wilk(self.swiat, [x, y]))
+        elif wybrano == "Zolw":
+            self.swiat.dodajOrganizm(Zolw(self.swiat, [x, y]))
+        elif wybrano == "CyberOwca":
+            self.swiat.dodajOrganizm(CyberOwca(self.swiat, [x, y]))
+        self.odswiez()
+

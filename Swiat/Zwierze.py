@@ -262,5 +262,5 @@ class Zwierze(Organizm):
             self.swiat.konsola += "\n"
             self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
             for i, organizm in enumerate(self.swiat.organizmy):
-                if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:
+                if organizm.polozenie[0] == org.polozenie[0] and organizm.polozenie[1] == org.polozenie[1]:
                     del self.swiat.organizmy[i]

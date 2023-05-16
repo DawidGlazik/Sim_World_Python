@@ -158,9 +158,6 @@ class Symulator:
                 self.konsola += "Pomyslnie wczytano stan symulacji"
             else:
                 self.konsola += "Plik nie istnieje"
-        print(self.organizmy)
-        print("\n")
-        print(self.plansza)
 
 
     def wypiszOrganizmy(self):
