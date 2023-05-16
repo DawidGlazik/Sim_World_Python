@@ -13,6 +13,8 @@ from Zwierzeta.Owca import Owca
 from Zwierzeta.Wilk import Wilk
 from Zwierzeta.Antylopa import Antylopa
 from Zwierzeta.CyberOwca import CyberOwca
+import os
+from tkinter import simpledialog
 
 
 class Symulator:
@@ -92,10 +94,74 @@ class Symulator:
         self.tura += 1
 
     def zapisz(self):
-        pass
+        nazwa_pliku = simpledialog.askstring(None, "Wprowadź nazwę pliku:")
+        if nazwa_pliku:
+            print("Wybrana nazwa pliku:", nazwa_pliku)
+            with open(nazwa_pliku, 'w') as plik:
+                dane = str(self.tura) + " " + str(self.szerokosc) + " " + str(self.wysokosc) + "\n"
+                plik.write(dane)
+                for organizm in self.organizmy:
+                    dane = str(organizm.nazwa) + " " + str(organizm.polozenie[0]) + " " + str(organizm.polozenie[1]) + " " + str(organizm.sila) + " " + str(organizm.wiek) + " "
+                    if isinstance(organizm, Czlowiek):
+                        dane += str(organizm.trwanie) + " " + str(organizm.przerwa)
+                    dane += "\n"
+                    plik.write(dane)
+                self.konsola += "Pomyslnie zapisano stan symulacji"
+                return
+        return
 
     def wczytaj(self):
-        pass
+        nazwa_pliku = simpledialog.askstring(None, "Wprowadź nazwę pliku:")
+        if nazwa_pliku:
+            if os.path.isfile(nazwa_pliku):
+                del self.plansza
+                self.organizmy = []
+                with open(nazwa_pliku, 'r') as plik:
+                    linia = plik.readline().rstrip().split(" ")
+                    self.tura = int(linia[0])
+                    self.szerokosc = int(linia[1])
+                    self.wysokosc = int(linia[2])
+                    self.plansza = [[Pole() for _ in range(self.szerokosc)] for _ in range(self.wysokosc)]
+                    for _linia in plik:
+                        linia = _linia.rstrip().split(" ")
+                        nazwa = linia[0]
+                        x = int(linia[1])
+                        y = int(linia[2])
+                        sila = int(linia[3])
+                        wiek = int(linia[4])
+                        if nazwa == "BarszczSosnowskiego":
+                            self.dodajOrganizm(BarszczSosnowskiego(self, [x, y], wiek))
+                        elif nazwa == "Guarana":
+                            self.dodajOrganizm(Guarana(self, [x, y], wiek))
+                        elif nazwa == "Mlecz":
+                            self.dodajOrganizm(Mlecz(self, [x, y], wiek))
+                        elif nazwa == "Trawa":
+                            self.dodajOrganizm(Trawa(self, [x, y], wiek))
+                        elif nazwa == "WilczeJagody":
+                            self.dodajOrganizm(WilczeJagody(self, [x, y], wiek))
+                        elif nazwa == "Antylopa":
+                            self.dodajOrganizm(Antylopa(self, [x, y], sila, wiek))
+                        elif nazwa == "Lis":
+                            self.dodajOrganizm(Lis(self, [x, y], sila, wiek))
+                        elif nazwa == "Owca":
+                            self.dodajOrganizm(Owca(self, [x, y], sila, wiek))
+                        elif nazwa == "Wilk":
+                            self.dodajOrganizm(Wilk(self, [x, y], sila, wiek))
+                        elif nazwa == "Zolw":
+                            self.dodajOrganizm(Zolw(self, [x, y], sila, wiek))
+                        elif nazwa == "CyberOwca":
+                            self.dodajOrganizm(CyberOwca(self, [x, y], sila, wiek))
+                        elif nazwa == "Czlowiek":
+                            trwanie = int(linia[5])
+                            przerwa = int(linia[6])
+                            self.dodajOrganizm(Czlowiek(self, [x, y], sila, wiek, trwanie, przerwa))
+                self.konsola += "Pomyslnie wczytano stan symulacji"
+            else:
+                self.konsola += "Plik nie istnieje"
+        print(self.organizmy)
+        print("\n")
+        print(self.plansza)
+
 
     def wypiszOrganizmy(self):
         for organizm in self.organizmy:

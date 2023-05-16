@@ -148,11 +148,20 @@ class Okno:
         self.odswiez()
 
     def zapisz(self):
-        # Implementacja logiki dla przycisku Zapisz
-        print("Zapisano świat")
+        self.swiat.zapisz()
+        self.text_area.configure(state="normal")
+        self.text_area.insert(tk.END, self.swiat.konsola)
+        self.text_area.configure(state="disabled")
+        self.odswiez()
+
 
     def wczytaj(self):
-        print("Wczytano świat")
+        self.swiat.wczytaj()
+        self.plansza = self.swiat.plansza
+        self.text_area.configure(state="normal")
+        self.text_area.insert(tk.END, self.swiat.konsola)
+        self.text_area.configure(state="disabled")
+        self.odswiez()
 
     def calopalenie(self):
         self.swiat.rozpocznijCalopalenie()
