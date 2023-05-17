@@ -233,7 +233,7 @@ class Zwierze(Organizm):
 
     def kolizja(self, org):
         if org.nazwa == self.nazwa:
-            if self.wiek > 2:
+            if org.wiek > 2:
                 self.rozmnazanie()
         elif org.sila >= self.sila:
             komentarz = ""

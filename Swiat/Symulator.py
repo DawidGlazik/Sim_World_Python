@@ -26,9 +26,9 @@ class Symulator:
         self.wysokosc = wysokosc
         self.organizmy = []
         self.plansza = [[Pole() for _ in range(szerokosc)] for _ in range(wysokosc)]
-        numberOfOrganisms = szerokosc * wysokosc / 15
+        liczbaOrganizmow = szerokosc * wysokosc / 15
         self.dodajOrganizm(Czlowiek(self, [int(wysokosc / 2), int(szerokosc / 2)]))
-        for i in range(0, int(numberOfOrganisms)):
+        for i in range(0, int(liczbaOrganizmow)):
             random1 = random.randint(0, wysokosc - 1)
             random2 = random.randint(0, szerokosc - 1)
             random3 = random.randint(0, 1000)
@@ -91,6 +91,8 @@ class Symulator:
                 tmp.akcja()
             else:
                 organizm.akcja()
+        for organizm in self.organizmy:
+            organizm.wiek += 1
         self.tura += 1
 
     def zapisz(self):

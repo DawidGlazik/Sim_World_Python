@@ -71,18 +71,18 @@ class Okno:
                         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="b")
                 self.canvas.bind("<Button-1>", self.klikniecie)
 
-        button_frame = tk.Frame(self.root)
-        button_frame.pack()
+        przyciski = tk.Frame(self.root)
+        przyciski.pack()
 
-        button1 = tk.Button(button_frame, text="Tura", command=self.tura)
-        button2 = tk.Button(button_frame, text="Zapisz", command=self.zapisz)
-        button3 = tk.Button(button_frame, text="Wczytaj", command=self.wczytaj)
-        button4 = tk.Button(button_frame, text="Calopalenie", command=self.calopalenie)
+        przycisk1 = tk.Button(przyciski, text="Tura", command=self.tura)
+        przycisk2 = tk.Button(przyciski, text="Zapisz", command=self.zapisz)
+        przycisk3 = tk.Button(przyciski, text="Wczytaj", command=self.wczytaj)
+        przycisk4 = tk.Button(przyciski, text="Calopalenie", command=self.calopalenie)
 
-        button1.pack(side="left")
-        button2.pack(side="left")
-        button3.pack(side="left")
-        button4.pack(side="left")
+        przycisk1.pack(side="left")
+        przycisk2.pack(side="left")
+        przycisk3.pack(side="left")
+        przycisk4.pack(side="left")
 
         self.text_area = scrolledtext.ScrolledText(self.root, height=10)
         self.text_area.insert(tk.END, "Tura: "+str(self.swiat.tura)+"\n")
@@ -202,9 +202,10 @@ class Okno:
                 break
 
     def klikniecie(self, event):
-        x = event.x // 30  # Oblicz indeks kolumny na podstawie współrzędnej x kliknięcia
-        y = event.y // 30  # Oblicz indeks wiersza na podstawie współrzędnej y kliknięcia
-
+        x = event.x // 30
+        y = event.y // 30
+        if y >= self.swiat.wysokosc or x >= self.swiat.szerokosc:
+            return
         if not isinstance(self.swiat.plansza[y][x], Pole):
             self.swiat.konsola += "Miejsce zajete"
             self.text_area.configure(state="normal")
@@ -215,12 +216,8 @@ class Okno:
         else:
             self.dialog = tk.Toplevel(self.root)
             self.dialog.title("Wybierz opcję")
-
-            # Lista opcji
             opcje = ["Wilk", "Owca", "Lis", "Zolw", "Antylopa", "CyberOwca", "Trawa", "Mlecz", "Guarana", "Wilcze Jagody",
                      "Barszcz Sosnowskiego"]
-
-            # Ustawienie przycisków zgodnie z układem 5, 5, 1
             for opcja in opcje:
                 button = tk.Button(self.dialog, text=opcja)
                 button.configure(command=lambda wybrano=opcja: self.handle_button_click(wybrano, y ,x))
@@ -228,7 +225,7 @@ class Okno:
 
     def handle_button_click(self, wybrano, x, y):
         self.dialog.destroy()
-        if wybrano == "BarszczSosnowskiego":
+        if wybrano == "Barszcz Sosnowskiego":
             self.swiat.dodajOrganizm(BarszczSosnowskiego(self.swiat, [x, y]))
         elif wybrano == "Guarana":
             self.swiat.dodajOrganizm(Guarana(self.swiat, [x, y]))
@@ -236,7 +233,7 @@ class Okno:
             self.swiat.dodajOrganizm(Mlecz(self.swiat, [x, y]))
         elif wybrano == "Trawa":
             self.swiat.dodajOrganizm(Trawa(self.swiat, [x, y]))
-        elif wybrano == "WilczeJagody":
+        elif wybrano == "Wilcze Jagody":
             self.swiat.dodajOrganizm(WilczeJagody(self.swiat, [x, y]))
         elif wybrano == "Antylopa":
             self.swiat.dodajOrganizm(Antylopa(self.swiat, [x, y]))

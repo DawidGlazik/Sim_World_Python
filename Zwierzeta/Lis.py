@@ -15,7 +15,7 @@ class Lis(Zwierze):
 
     def ruch(self, x, y):
         if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Pole):
-            self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y] = self.swiat.plansza[self.polozenie[0]][self.polozenie[1]];
+            self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y] = self.swiat.plansza[self.polozenie[0]][self.polozenie[1]]
             self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
             self.polozenie[0] += x
             self.polozenie[1] += y
@@ -37,4 +37,4 @@ class Lis(Zwierze):
             komentarz += ")"
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
-            self.swiat.dodajOrganizm(Lis(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
+            self.swiat.dodajOrganizm(Lis(self.swiat, [self.polozenie[0] + x, self.polozenie[1] + y]))

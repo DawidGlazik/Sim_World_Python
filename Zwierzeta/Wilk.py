@@ -25,5 +25,5 @@ class Wilk(Zwierze):
             komentarz += ")"
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
-            self.swiat.dodajOrganizm(Wilk(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
+            self.swiat.dodajOrganizm(Wilk(self.swiat, [self.polozenie[0] + x, self.polozenie[1] + y]))
 

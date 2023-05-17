@@ -1,6 +1,7 @@
 from Swiat.Roslina import Roslina
 from Rosliny.Pole import Pole
 from Swiat.Zwierze import Zwierze
+from Zwierzeta.CyberOwca import CyberOwca
 
 class BarszczSosnowskiego(Roslina):
 
@@ -28,18 +29,21 @@ class BarszczSosnowskiego(Roslina):
 
     def sprawdzIZabij(self, x, y):
         if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], Zwierze):
-            komentarz = ""
-            komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].nazwa)
-            komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].polozenie)
-            komentarz += " zabity(a) przez "
-            komentarz += str(self.nazwa)
-            komentarz += str(self.polozenie)
-            self.swiat.konsola += komentarz
-            self.swiat.konsola += "\n"
-            self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y] = Pole()
-            for i, organizm in enumerate(self.swiat.organizmy):
-                if organizm.polozenie[0] == self.polozenie[0] + x and organizm.polozenie[1] == self.polozenie[1] + y:
-                    del self.swiat.organizmy[i]
+            if isinstance(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y], CyberOwca):
+                return
+            else:
+                komentarz = ""
+                komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].nazwa)
+                komentarz += str(self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y].polozenie)
+                komentarz += " zabity(a) przez "
+                komentarz += str(self.nazwa)
+                komentarz += str(self.polozenie)
+                self.swiat.konsola += komentarz
+                self.swiat.konsola += "\n"
+                self.swiat.plansza[self.polozenie[0] + x][self.polozenie[1] + y] = Pole()
+                for i, organizm in enumerate(self.swiat.organizmy):
+                    if organizm.polozenie[0] == self.polozenie[0] + x and organizm.polozenie[1] == self.polozenie[1] + y:
+                        del self.swiat.organizmy[i]
 
     def zabijOkolice(self):
         if self.polozenie[0] == 0:
@@ -99,12 +103,28 @@ class BarszczSosnowskiego(Roslina):
         super().akcja()
 
     def kolizja(self, org):
-        komentarz = ""
-        komentarz += str(org.nazwa)
-        komentarz += " zjada "
-        komentarz += str(self.nazwa)
-        komentarz += " i umiera"
-        self.swiat.konsola += komentarz
-        self.swiat.konsola += "\n"
-        self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
-        self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
+        if isinstance(org, CyberOwca):
+            komentarz = ""
+            komentarz += str(org.nazwa)
+            komentarz += " zjada "
+            komentarz += str(self.nazwa)
+            komentarz += str(self.polozenie)
+            self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
+            for i, organizm in enumerate(self.swiat.organizmy):
+                if organizm.polozenie[0] == self.polozenie[0] and organizm.polozenie[1] == self.polozenie[1]:
+                    del self.swiat.organizmy[i]
+            self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = org
+            self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()
+            org.polozenie[0] = self.polozenie[0]
+            org.polozenie[1] = self.polozenie[1]
+        else:
+            komentarz = ""
+            komentarz += str(org.nazwa)
+            komentarz += " zjada "
+            komentarz += str(self.nazwa)
+            komentarz += " i umiera"
+            self.swiat.konsola += komentarz
+            self.swiat.konsola += "\n"
+            self.swiat.plansza[self.polozenie[0]][self.polozenie[1]] = Pole()
+            self.swiat.plansza[org.polozenie[0]][org.polozenie[1]] = Pole()

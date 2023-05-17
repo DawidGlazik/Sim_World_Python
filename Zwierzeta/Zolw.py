@@ -26,7 +26,7 @@ class Zolw(Zwierze):
             komentarz += ")"
             self.swiat.konsola += komentarz
             self.swiat.konsola += "\n"
-            self.swiat.dodajOrganizm(Zolw(self.swiat, (self.polozenie[0] + x, self.polozenie[1] + y)))
+            self.swiat.dodajOrganizm(Zolw(self.swiat, [self.polozenie[0] + x, self.polozenie[1] + y]))
 
     def akcja(self):
         los = random.randint(0,3)
