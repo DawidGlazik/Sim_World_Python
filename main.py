@@ -1,4 +1,4 @@
-from Swiat.Symulator import Symulator
+from World.Simulator import Simulator
 
-swiat = Symulator(20, 10)
-swiat.rysujSwiat(swiat.plansza)
+world = Simulator(20, 10)
+world.printWorld(world.board)
