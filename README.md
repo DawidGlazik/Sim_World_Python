@@ -14,7 +14,7 @@ When the collision occurs:
   * (animal - animal) if animals are the same type, they reproduce
 Plants can propagate.
 ### ACTION
-Action is different for different type of organisms. For instance, hogweed kills every animal in the nearest area except cyber-sheep, fox won't move to field with organism stronger than itself, cyber-sheep goes always in nearest hogweed's direction.
+Action is different for different type of organisms. For instance, hogweed kills every animal in the nearest area except cyber-sheep, fox won't move to field with organism stronger than itself, cyber-sheep goes always in nearest hogweed's direction and eats it.
 ### HUMAN ABILITY
 Human has ability which is calopalenie. For 5 turns human kills every organism in the nearest area. 5 turns cooldown.
 ### Preview
