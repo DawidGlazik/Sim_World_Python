@@ -242,7 +242,7 @@ class Window:
         elif chosen == "Sheep":
             self.world.addOrganism(Sheep(self.world, [x, y]))
         elif chosen == "Wolf":
-            self.world.addOrganism(Wilk(self.world, [x, y]))
+            self.world.addOrganism(Wolf(self.world, [x, y]))
         elif chosen == "Turtle":
             self.world.addOrganism(Turtle(self.world, [x, y]))
         elif chosen == "CyberSheep":
